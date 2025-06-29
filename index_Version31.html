@@ -1,0 +1,1066 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LilyGram - School Moments</title>
+  <link rel="icon" href="https://img.icons8.com/fluency/48/flower.png" type="image/png">
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Montserrat:wght@500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --brand: #b57edc;
+      --accent: #ff5fa2;
+      --background: #fff0fa;
+      --card: #fff;
+      --text: #22223b;
+      --shadow: 0 4px 18px rgba(181,126,220,0.08);
+      --nav-active: #ffeffc;
+    }
+    body {
+      font-family: 'Montserrat', Arial, sans-serif;
+      background: var(--background);
+      margin: 0;
+      padding: 0;
+      color: var(--text);
+    }
+    header {
+      background: linear-gradient(90deg, var(--brand), var(--accent));
+      color: white;
+      padding: 1.2rem 1rem 1rem 1rem;
+      text-align: center;
+      font-size: 2.1rem;
+      font-family: 'Pacifico', cursive;
+      letter-spacing: 2.5px;
+      border-bottom-left-radius: 25px;
+      border-bottom-right-radius: 25px;
+      box-shadow: var(--shadow);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .header-title {
+      flex: 1;
+      text-align: center;
+      font-family: 'Pacifico', cursive;
+      font-size: 2.1rem;
+      letter-spacing: 2.5px;
+    }
+    .search-icon {
+      font-size: 1.75rem;
+      color: #fff;
+      background: none;
+      border: none;
+      cursor: pointer;
+      margin-left: 0.5rem;
+      margin-right: 0.2rem;
+      margin-top: 0.1rem;
+      padding: 0.17rem 0.2rem;
+      border-radius: 8px;
+      transition: background 0.15s;
+      position: relative;
+    }
+    .search-icon:hover, .search-icon:focus {
+      background: #fff3;
+    }
+    nav {
+      position: fixed;
+      left: 0;
+      bottom: 0;
+      width: 100vw;
+      background: var(--card);
+      border-top: 1.5px solid #eee;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      padding: 0.7rem 0;
+      z-index: 1000;
+      box-shadow: 0 -3px 16px rgba(181,126,220,0.08);
+    }
+    .nav-btn {
+      background: none;
+      border: none;
+      color: var(--brand);
+      font-size: 2.1rem;
+      cursor: pointer;
+      padding: 0.3rem 0.9rem;
+      border-radius: 14px;
+      transition: color 0.22s, background 0.18s, box-shadow 0.15s;
+      outline: none;
+      position: relative;
+    }
+    .nav-btn.active, .nav-btn:focus {
+      color: var(--accent);
+      background: var(--nav-active);
+      box-shadow: 0 2px 12px rgba(255,95,162,0.06);
+    }
+    .nav-btn:hover::after, .nav-btn.active::after {
+      content: attr(data-tip);
+      position: absolute;
+      bottom: 120%;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--brand);
+      color: #fff;
+      font-size: 0.92rem;
+      padding: 3px 12px;
+      border-radius: 9px;
+      opacity: 0.97;
+      pointer-events: none;
+      white-space: nowrap;
+      z-index: 90;
+      animation: fadeIn 0.13s;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateX(-50%) scale(0.95);}
+      to   { opacity: 0.97; transform: translateX(-50%) scale(1);}
+    }
+    .section {
+      display: none;
+      max-width: 600px;
+      margin: 2.2rem auto 4.2rem auto;
+      background: transparent;
+      padding: 0;
+    }
+    .section.active { display: block; }
+    .search-bar-container {
+      width: 100%;
+      max-width: 600px;
+      margin: 0 auto;
+      position: sticky;
+      top: 62px;
+      z-index: 15;
+      display: none;
+      animation: slideDown 0.2s;
+      background: var(--background);
+      padding-bottom: 0.5rem;
+    }
+    .search-bar-container.active { display: block;}
+    @keyframes slideDown {
+      from { transform: translateY(-25px); opacity: 0;}
+      to { transform: translateY(0); opacity: 1;}
+    }
+    .search-bar {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 1rem 0 0.6rem 0;
+      width: 100%;
+    }
+    .search-bar input {
+      width: 95%;
+      padding: 0.7rem 1.1rem;
+      font-size: 1.1rem;
+      border-radius: 11px;
+      border: 1.5px solid #ddd;
+      background: #fff;
+      color: #222;
+      outline: none;
+      box-shadow: 0 1px 7px rgba(181,126,220,0.06);
+      margin-bottom: 0.1rem;
+    }
+    .close-search {
+      background: none;
+      border: none;
+      color: #b57edc;
+      font-size: 1.5rem;
+      margin-left: 0.5rem;
+      cursor: pointer;
+      border-radius: 7px;
+      padding: 0.17rem 0.2rem;
+      transition: background 0.1s;
+    }
+    .close-search:hover { background: #f1e4fa; }
+    .user-list-area {
+      background: var(--card);
+      border-radius: 21px;
+      box-shadow: var(--shadow);
+      padding: 1.4rem 1rem 1.2rem 1rem;
+      margin: 2.5rem auto 2.2rem auto;
+      max-width: 600px;
+    }
+    .user-list-title {
+      text-align: center;
+      font-size: 1.18rem;
+      color: var(--brand);
+      font-weight: 700;
+      margin-bottom: 1.2rem;
+      letter-spacing: 0.5px;
+    }
+    .user-row {
+      display: flex;
+      align-items: center;
+      gap: 1.1rem;
+      margin-bottom: 1.3rem;
+      border-radius: 14px;
+      padding: 0.6rem 0.6rem 0.6rem 0.1rem;
+      background: #faf7fd;
+      box-shadow: 0 1.5px 8px rgba(181,126,220,0.06);
+    }
+    .user-avatar {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2.5px solid var(--brand);
+      background: #fff;
+    }
+    .user-info {
+      flex: 1;
+      min-width: 0;
+    }
+    .user-name {
+      font-weight: 600;
+      color: var(--brand);
+      font-size: 1.06rem;
+      letter-spacing: 0.2px;
+    }
+    .badge.friend {
+      background: #24e25a;
+      color: #fff;
+      font-size: 0.87rem;
+      font-weight: 600;
+      border-radius: 10px;
+      padding: 2px 10px;
+      margin-left: 8px;
+      vertical-align: middle;
+    }
+    .badge.pending {
+      background: #ffbe40;
+      color: #fff;
+      font-size: 0.87rem;
+      font-weight: 600;
+      border-radius: 10px;
+      padding: 2px 10px;
+      margin-left: 8px;
+      vertical-align: middle;
+    }
+    .badge.request {
+      background: #3d8af7;
+      color: #fff;
+      font-size: 0.87rem;
+      font-weight: 600;
+      border-radius: 10px;
+      padding: 2px 10px;
+      margin-left: 8px;
+      vertical-align: middle;
+    }
+    .friend-btn, .pending-btn, .accept-btn, .group-join-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 1.4rem;
+      margin-left: 7px;
+      border-radius: 8px;
+      padding: 0.14rem 0.4rem;
+      transition: background 0.15s;
+      color: var(--brand);
+    }
+    .friend-btn:hover, .group-join-btn:hover { background: #f1e4fa; }
+    .pending-btn { color: #ffbe40; cursor: not-allowed;}
+    .accept-btn { color: #24e25a; }
+    .accept-btn:hover { background: #e7ffe7;}
+    .create-group-btn {
+      background: none;
+      border: none;
+      color: var(--brand);
+      font-size: 1.7rem;
+      margin: 0.8rem 0 0.6rem 0.4rem;
+      cursor: pointer;
+      border-radius: 8px;
+      padding: 0.1rem 0.6rem;
+      float: right;
+      transition: background 0.11s;
+    }
+    .create-group-btn:hover { background: #fff4; }
+    .group-join-btn {
+      color: var(--brand);
+      background: none;
+      border: none;
+      font-size: 1.25rem;
+      margin-left: 7px;
+      border-radius: 8px;
+      padding: 0.13rem 0.43rem;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    .group-join-btn:hover { background: #e6ffe6; }
+    .badge.group { background: #ffa502;}
+    .badge.joined { background: #24e25a;}
+    .badge.closed { background: #ff5fa2;}
+    .badge.invited { background: #3d8af7;}
+    .badge {
+      display: inline-block;
+      background: linear-gradient(90deg,#b57edc,#ff5fa2);
+      color: #fff;
+      font-size: 0.85rem;
+      font-weight: bold;
+      border-radius: 10px;
+      padding: 2px 10px;
+      margin-left: 6px;
+      letter-spacing: 0.5px;
+      vertical-align: middle;
+    }
+    .dm-list {
+      margin: 1.5rem 0 0 0;
+      padding: 0;
+    }
+    .dm-row {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      background: var(--card);
+      border-radius: 14px;
+      box-shadow: var(--shadow);
+      padding: 1.1rem 1rem;
+      margin-bottom: 1.1rem;
+      cursor: pointer;
+      transition: background 0.2s;
+      position: relative;
+    }
+    .dm-row:hover {
+      background: #f7eaff;
+    }
+    .dm-avatar {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid var(--brand);
+      background: #fff;
+    }
+    .dm-title {
+      font-weight: 600;
+      color: var(--brand);
+      font-size: 1.06rem;
+    }
+    .profile-area {
+      background: var(--card);
+      border-radius: 22px;
+      box-shadow: var(--shadow);
+      padding: 2.2rem 1.5rem 1.5rem 1.5rem;
+      text-align: center;
+      margin-top: 2.5rem;
+    }
+    .profile-avatar {
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      border: 2.5px solid var(--brand);
+    }
+    .profile-name {
+      font-size: 1.4rem;
+      font-weight: 700;
+      margin-bottom: 0.3rem;
+    }
+    .profile-username {
+      color: #888;
+      margin-bottom: 0.7rem;
+    }
+    .post {
+      background: var(--card);
+      border-radius: 18px;
+      margin-bottom: 2rem;
+      box-shadow: var(--shadow);
+      padding: 1.2rem 1rem 1rem 1rem;
+      position: relative;
+    }
+    .post-header {
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+      margin-bottom: 0.7rem;
+    }
+    .post-avatar {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2.5px solid var(--brand);
+      background: #fff;
+    }
+    .post-user {
+      font-weight: 600;
+      font-size: 1.03rem;
+      color: var(--brand);
+    }
+    /* Middle FAB style in nav */
+    #fabPost {
+      background: linear-gradient(90deg,#b57edc,#ff5fa2);
+      color: #fff;
+      border: none;
+      border-radius: 50%;
+      width: 52px;
+      height: 52px;
+      font-size: 2.1rem;
+      box-shadow: 0 2px 10px #b57edc44;
+      cursor: pointer;
+      transition: background 0.15s, transform 0.13s;
+      margin: 0 0.7rem 0 0.7rem;
+      vertical-align: middle;
+      display: inline-block;
+    }
+    #fabPost:hover { background: linear-gradient(90deg,#ff5fa2,#b57edc); transform: scale(1.07);}
+    /* Popup Modal styles */
+    #modalOverlay {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; width: 100vw; height: 100vh;
+      background: rgba(28,19,41,0.16);
+      z-index: 9999;
+      align-items: center;
+      justify-content: center;
+    }
+    #modalBox {
+      background: #fff;
+      border-radius: 18px;
+      max-width: 90vw;
+      width: 360px;
+      box-shadow: 0 8px 44px #b57edc33;
+      padding: 2rem 1.2rem 1.3rem 1.2rem;
+      position: relative;
+      text-align: center;
+      animation: fadeIn 0.18s;
+    }
+    /* Post Creator Modal */
+    #postCreatorModal input[type="file"] {
+      margin: 0.8rem 0 0.7rem 0;
+      font-size: 1.01rem;
+    }
+    #postCreatorModal textarea {
+      width: 98%;
+      min-height: 60px;
+      max-height: 150px;
+      margin-bottom: 1rem;
+      padding: 0.7rem 1rem;
+      font-size: 1.08rem;
+      border-radius: 12px;
+      border: 1.5px solid #ddd;
+      resize: vertical;
+      outline: none;
+      color: #333;
+    }
+    #postCreatorModal .audience-select {
+      width: 98%;
+      margin: 0.6rem 0 1rem 0;
+      padding: 0.53rem 1rem;
+      border-radius: 9px;
+      border: 1.2px solid #ddd;
+      font-size: 1.06rem;
+      background: #faf7fd;
+    }
+    #postCreatorModal .preview-img {
+      max-width: 100%;
+      border-radius: 13px;
+      margin-bottom: 1rem;
+      margin-top: 0.1rem;
+      box-shadow: 0 1px 4px #b57edc33;
+    }
+    #postCreatorModal .post-btn {
+      background: linear-gradient(90deg,#b57edc,#ff5fa2);
+      color: #fff;
+      border: none;
+      border-radius: 13px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      padding: 0.7rem 1.8rem;
+      margin-top: 0.8rem;
+      cursor: pointer;
+      box-shadow: 0 2px 9px #b57edc22;
+      transition: background 0.13s;
+    }
+    #postCreatorModal .post-btn:disabled {
+      background: #ccc;
+      color: #fff;
+      cursor: not-allowed;
+      opacity: 0.7;
+    }
+    @media (max-width:700px) {
+      .section { margin-left:0.2rem; margin-right:0.2rem; max-width:100vw; }
+      nav { font-size: 1.1rem; }
+      header { font-size: 1.3rem; }
+      .nav-btn { font-size: 2rem; }
+      .search-bar input { font-size: 1rem; }
+      .user-list-area { padding:1.2rem 0.5rem; }
+      #fabPost { width: 44px; height: 44px; font-size: 1.6rem;}
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <span class="header-title">LilyGram <span style="font-size:1.1rem;">&#127800;</span></span>
+    <span style="position:relative;">
+      <button id="notifBell" class="search-icon" title="Notifications" onclick="showNotifModal()">
+        🔔
+        <span id="notifDot" style="position:absolute;top:0.2rem;right:0.2rem;background:#ff5fa2;color:#fff;border-radius:50%;width:1rem;height:1rem;display:inline-block;font-size:0.83rem;line-height:1rem;text-align:center;vertical-align:middle;box-shadow:0 0 0.3rem #ff5fa2aa;">•</span>
+      </button>
+    </span>
+    <button class="search-icon" id="showSearchBtn" title="Search Feed" onclick="toggleSearchBar(true)">&#128269;</button>
+  </header>
+  
+  <!-- Search Bar (Feed Only) -->
+  <div class="search-bar-container" id="feedSearchBar">
+    <form class="search-bar" onsubmit="event.preventDefault();">
+      <input type="text" id="feedSearch" placeholder="Search posts or people..." oninput="renderFeed()" autocomplete="off">
+      <button class="close-search" title="Close Search" onclick="toggleSearchBar(false)" type="button">&times;</button>
+    </form>
+  </div>
+  
+  <nav>
+    <button class="nav-btn active" id="feedBtn" onclick="showSection('feed')" data-tip="Feed">🏠</button>
+    <button class="nav-btn" id="friendsBtn" onclick="showSection('friends')" data-tip="Friends">🤝</button>
+    <!-- FAB button in the middle of nav -->
+    <button id="fabPost" onclick="showPostCreator()" title="Create a Post">+</button>
+    <button class="nav-btn" id="messagesBtn" onclick="showSection('messages')" data-tip="Messages">💬</button>
+    <button class="nav-btn" id="profileBtn" onclick="showSection('profile')" data-tip="Profile">👤</button>
+  </nav>
+  
+  <!-- Feed Section -->
+  <main class="section active" id="feedSection">
+    <div id="feedList"></div>
+  </main>
+  
+  <!-- Friends Section -->
+  <section class="section" id="friendsSection">
+    <div class="user-list-area">
+      <div class="user-list-title">Find Friends</div>
+      <div id="userList"></div>
+    </div>
+  </section>
+  
+  <!-- Messages Section (DMs + Groups - Tabs) -->
+  <section class="section" id="messagesSection">
+    <div style="display:flex;justify-content:center;gap:1.2rem;margin-bottom:1.3rem;">
+      <button id="dmTab" class="nav-btn active" onclick="showMsgTab('dm')" data-tip="Direct Messages">👤</button>
+      <button id="groupTab" class="nav-btn" onclick="showMsgTab('group')" data-tip="Groups">🫂</button>
+      <button id="createGroupBtn" class="create-group-btn" title="Create Group" onclick="showCreateGroup()" style="display:none;">&#43;</button>
+    </div>
+    <div class="search-bar" style="margin-bottom:1rem;">
+      <input type="text" id="msgSearch" placeholder="Search..." oninput="renderMsgLists()">
+    </div>
+    <div id="dmList"></div>
+    <div id="groupList" style="display:none"></div>
+    <div id="createGroupPanel" style="display:none;text-align:center;margin-bottom:1.3rem;">
+      <input type="text" id="newGroupName" placeholder="Group name..." 
+        style="padding:0.6rem 1rem;font-size:1.08rem;border-radius:10px;border:1.5px solid #ddd;max-width:75%;" />
+      <label style="margin-left:0.7rem;font-size:1.01rem;">
+        <input type="checkbox" id="newGroupClosed" style="transform:scale(1.2);margin-right:0.3rem;">
+        Invite Only
+      </label>
+      <button class="create-group-btn" style="font-size:1.3rem;" onclick="createGroup()">✔️</button>
+      <button class="create-group-btn" style="font-size:1.3rem;color:#aaa;" onclick="hideCreateGroup()">✖️</button>
+    </div>
+  </section>
+  
+  <!-- Profile Section -->
+  <section class="section" id="profileSection">
+    <div class="profile-area">
+      <img src="https://randomuser.me/api/portraits/men/60.jpg" class="profile-avatar">
+      <div class="profile-name">samkelizwe <span class="badge">Admin</span></div>
+      <div class="profile-username">@samkelizwe</div>
+      <div style="margin-top:1.2rem;">Welcome to LilyGram!</div>
+    </div>
+  </section>
+  
+  <!-- Post Creator Modal -->
+  <div id="postCreatorOverlay" style="display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(28,19,41,0.18);z-index:9999;align-items:center;justify-content:center;">
+    <div id="postCreatorModal" style="background:#fff;border-radius:18px;max-width:90vw;width:362px;box-shadow:0 8px 44px #b57edc33;padding:2.2rem 1.2rem 1.5rem 1.2rem;position:relative;text-align:center;">
+      <div style="font-size:1.3rem;font-weight:600;margin-bottom:0.7rem;">Create Post</div>
+      <textarea id="postText" maxlength="280" placeholder="What's happening?"></textarea>
+      <input type="file" id="postImageInput" accept="image/*" onchange="postImagePreview(event)">
+      <div id="postImgPreviewArea"></div>
+      <select id="postAudience" class="audience-select">
+        <option value="everyone">Everyone</option>
+        <option value="friends">Friends Only</option>
+        <option value="profile">My Profile</option>
+      </select>
+      <button class="post-btn" onclick="submitPost()" id="postBtn" disabled>Post</button>
+      <button onclick="hidePostCreator()" style="position:absolute;top:12px;right:17px;background:none;border:none;font-size:1.6rem;color:#b57edc;cursor:pointer;">&times;</button>
+    </div>
+  </div>
+  
+  <!-- Popup Modal -->
+  <div id="modalOverlay">
+    <div id="modalBox">
+      <div id="modalContent"></div>
+      <button onclick="closeModal()" style="margin-top:1.3rem;background:var(--brand);color:#fff;border:none;font-size:1.1rem;border-radius:9px;padding:0.6rem 1.4rem;cursor:pointer;">OK</button>
+      <button onclick="closeModal()" style="position:absolute;top:11px;right:15px;background:none;border:none;font-size:1.6rem;color:#b57edc;cursor:pointer;">&times;</button>
+    </div>
+  </div>
+
+  <script>
+    // --- Navigation logic ---
+    function showSection(section) {
+      document.getElementById('feedSection').classList.remove('active');
+      document.getElementById('friendsSection').classList.remove('active');
+      document.getElementById('messagesSection').classList.remove('active');
+      document.getElementById('profileSection').classList.remove('active');
+      document.getElementById(section + 'Section').classList.add('active');
+      document.getElementById('feedBtn').classList.remove('active');
+      document.getElementById('friendsBtn').classList.remove('active');
+      document.getElementById('messagesBtn').classList.remove('active');
+      document.getElementById('profileBtn').classList.remove('active');
+      if(section==='feed') document.getElementById('feedBtn').classList.add('active');
+      if(section==='friends') document.getElementById('friendsBtn').classList.add('active');
+      if(section==='messages') document.getElementById('messagesBtn').classList.add('active');
+      if(section==='profile') document.getElementById('profileBtn').classList.add('active');
+      if(section !== 'feed') toggleSearchBar(false);
+      if(section === 'messages') showMsgTab(currentMsgTab);
+    }
+    // --- Search bar toggling logic ---
+    function toggleSearchBar(show) {
+      const bar = document.getElementById('feedSearchBar');
+      if(show) {
+        bar.classList.add('active');
+        setTimeout(() => document.getElementById('feedSearch').focus(), 100);
+      } else {
+        bar.classList.remove('active');
+        document.getElementById('feedSearch').value = '';
+        renderFeed();
+      }
+    }
+    document.addEventListener('keydown', function(e) {
+      if(e.key === "Escape") {
+        toggleSearchBar(false);
+        closeModal();
+        hidePostCreator();
+      }
+    });
+
+    // DEMO USER DATA
+    const currentUser = "samkelizwe";
+    const users = [
+      { username: "lily", displayName: "Lily", avatar: "https://randomuser.me/api/portraits/women/65.jpg" },
+      { username: "bestie", displayName: "Bestie", avatar: "https://randomuser.me/api/portraits/women/66.jpg" },
+      { username: "sam", displayName: "Sam", avatar: "https://randomuser.me/api/portraits/men/67.jpg" }
+    ];
+    // FRIEND DATA for DEMO
+    let friends = ["lily"];
+    let sentRequests = ["bestie"];
+    let receivedRequests = ["sam"];
+
+    // GROUPS DEMO
+    let groups = [
+      { name: "Art Club", avatar: "https://img.icons8.com/emoji/48/paint-palette.png", members: ["lily","samkelizwe"], preview: "Next meeting: Friday!", unread: 2, closed: false, invited: [] },
+      { name: "Grade 12", avatar: "https://img.icons8.com/color/48/graduation-cap.png", members: ["samkelizwe"], preview: "Party planning 🎉", unread: 0, closed: true, invited: [] },
+      { name: "Science Buddies", avatar: "https://img.icons8.com/color/48/microscope.png", members: ["sam"], preview: "Lab results posted!", unread: 1, closed: true, invited: ["samkelizwe"] }
+    ];
+    // DMs
+    const chats = [
+      { type: "dm", name: "Lily", avatar: "https://randomuser.me/api/portraits/women/65.jpg", preview: "See you at art club!", unread: 0 },
+      { type: "dm", name: "Bestie", avatar: "https://randomuser.me/api/portraits/women/66.jpg", preview: "Let's practice after school!", unread: 1 }
+    ];
+
+    // --- Notifications: ONLY social events (no DM/message notifications) ---
+    let notifications = [
+      { type: "friend_request", text: "Lily sent you a friend request!", time: "Just now", read: false },
+      { type: "group_invite", text: "Invited to Science Buddies group", time: "5m ago", read: false },
+      { type: "group_accept", text: "Your request to join Art Club was accepted!", time: "10m ago", read: true },
+      { type: "friend_accept", text: "Bestie accepted your friend request.", time: "15m ago", read: true }
+      // Add new follower, like, comment, mention, etc. here as you expand!
+    ];
+
+    function showNotifModal() {
+      let html = `<div style="font-size:1.3rem;font-weight:600;margin-bottom:0.8rem;">Notifications</div>`;
+      if(notifications.length === 0) {
+        html += `<div style="color:#aaa;">No notifications yet!</div>`;
+      } else {
+        notifications.forEach(n => {
+          let icon = "🔔";
+          if (n.type === "friend_request") icon = "🤝";
+          if (n.type === "friend_accept") icon = "✅";
+          if (n.type === "group_invite") icon = "🫂";
+          if (n.type === "group_accept") icon = "✔️";
+          if (n.type === "follow") icon = "➕";
+          html += `<div style="background:${n.read?'#faf7fd':'#ffe7fa'};border-radius:8px;padding:0.7rem 0.8rem;margin-bottom:0.8rem;text-align:left;">
+            <span style="font-size:1.1rem;">${icon}</span>
+            <span style="margin-left:0.7rem;">${n.text}</span>
+            <span style="float:right;color:#bbb;font-size:0.89rem;">${n.time}</span>
+          </div>`;
+        });
+      }
+      showModal(html);
+      // Mark all as read
+      notifications.forEach(n=>n.read=true);
+      updateNotifBell();
+    }
+
+    function updateNotifBell() {
+      let anyUnread = notifications.some(n=>!n.read);
+      document.getElementById("notifDot").style.display = anyUnread ? "inline-block" : "none";
+    }
+    updateNotifBell();
+
+    // --- Popup Modal System ---
+    function showModal(html) {
+      document.getElementById('modalContent').innerHTML = html;
+      document.getElementById('modalOverlay').style.display = 'flex';
+    }
+    function closeModal() {
+      document.getElementById('modalOverlay').style.display = 'none';
+    }
+
+    // --- FRIENDS ---
+    function renderUserList() {
+      let html = "";
+      users.forEach(u => {
+        if (u.username === currentUser) return;
+        if (friends.includes(u.username)) {
+          html += `<div class="user-row">
+            <img class="user-avatar" src="${u.avatar}" alt="${u.displayName}">
+            <div class="user-info">
+              <span class="user-name">${u.displayName}</span>
+              <span class="badge friend" title="You are friends">✅ Friend</span>
+              <div style="font-size:0.98rem;color:#888;">@${u.username}</div>
+            </div>
+          </div>`;
+        } else if (sentRequests.includes(u.username)) {
+          html += `<div class="user-row">
+            <img class="user-avatar" src="${u.avatar}" alt="${u.displayName}">
+            <div class="user-info">
+              <span class="user-name">${u.displayName}</span>
+              <span class="badge pending" title="Friend request sent">🕓 Pending</span>
+              <div style="font-size:0.98rem;color:#888;">@${u.username}</div>
+            </div>
+            <button class="pending-btn" title="Pending">&#128336;</button>
+          </div>`;
+        } else if (receivedRequests.includes(u.username)) {
+          html += `<div class="user-row">
+            <img class="user-avatar" src="${u.avatar}" alt="${u.displayName}">
+            <div class="user-info">
+              <span class="user-name">${u.displayName}</span>
+              <span class="badge request" title="Requested to be your friend">👋 Request</span>
+              <div style="font-size:0.98rem;color:#888;">@${u.username}</div>
+            </div>
+            <button class="accept-btn" title="Accept Request" onclick="acceptFriend('${u.username}')">&#10003;</button>
+          </div>`;
+        } else {
+          html += `<div class="user-row">
+            <img class="user-avatar" src="${u.avatar}" alt="${u.displayName}">
+            <div class="user-info">
+              <span class="user-name">${u.displayName}</span>
+              <div style="font-size:0.98rem;color:#888;">@${u.username}</div>
+            </div>
+            <button class="friend-btn" title="Add Friend" onclick="addFriend('${u.username}')">&#43;</button>
+          </div>`;
+        }
+      });
+      document.getElementById("userList").innerHTML = html || "<div style='color:#aaa;text-align:center'>No users found.</div>";
+    }
+    function addFriend(username) {
+      if (!sentRequests.includes(username) && !friends.includes(username)) {
+        sentRequests.push(username);
+        notifications.unshift({type:"friend_request", text:`You sent a friend request to ${username}!`, time:"Now", read:false});
+        updateNotifBell();
+        renderUserList();
+        showModal(`<div style="font-size:2rem;margin-bottom:1rem;">🤝</div>
+          <div style="font-weight:600;font-size:1.1rem;">Friend request sent!</div>
+          <div style="color:#888;margin-top:0.5rem;">${username} will see your request soon.</div>`);
+      }
+    }
+    function acceptFriend(username) {
+      if (receivedRequests.includes(username) && !friends.includes(username)) {
+        friends.push(username);
+        receivedRequests = receivedRequests.filter(u => u !== username);
+        notifications.unshift({type:"friend_accept", text:`You accepted ${username}'s friend request!`, time:"Now", read:false});
+        updateNotifBell();
+        renderUserList();
+        showModal(`<div style="font-size:2rem;margin-bottom:1rem;">🤝</div>
+          <div style="font-weight:600;font-size:1.1rem;">Friend request accepted!</div>
+          <div style="color:#888;margin-top:0.5rem;">You and ${username} are now friends.</div>`);
+      }
+    }
+
+    // --- MESSAGES: DM & GROUP TAB SYSTEM ---
+    let currentMsgTab = 'dm';
+    function showMsgTab(tab) {
+      currentMsgTab = tab;
+      document.getElementById('dmTab').classList.remove('active');
+      document.getElementById('groupTab').classList.remove('active');
+      document.getElementById('dmList').style.display = 'none';
+      document.getElementById('groupList').style.display = 'none';
+      document.getElementById('createGroupBtn').style.display = (tab==='group') ? "" : "none";
+      if(tab==='dm') {
+        document.getElementById('dmTab').classList.add('active');
+        document.getElementById('dmList').style.display = '';
+      } else {
+        document.getElementById('groupTab').classList.add('active');
+        document.getElementById('groupList').style.display = '';
+      }
+      renderMsgLists();
+    }
+    function renderMsgLists() {
+      const query = (document.getElementById("msgSearch")?.value || "").toLowerCase();
+      // DMs
+      let dmsHtml = "";
+      chats.forEach(chat => {
+        if (
+          !query ||
+          chat.name.toLowerCase().includes(query) ||
+          (chat.preview && chat.preview.toLowerCase().includes(query))
+        ) {
+          dmsHtml += `<div class="dm-row" onclick="showDMChat('${chat.name}')">
+            <img class="dm-avatar" src="${chat.avatar}">
+            <div style="flex:1;">
+              <span class="dm-title">${chat.name}</span>
+              <div style="color:#888;font-size:0.97rem;">${chat.preview}</div>
+            </div>
+            ${chat.unread ? `<span style="background:var(--accent);color:#fff;border-radius:8px;padding:0 7px;font-size:0.93rem;margin-left:8px;">${chat.unread}</span>` : ""}
+          </div>`;
+        }
+      });
+      document.getElementById("dmList").innerHTML = dmsHtml || "<div style='color:#aaa;text-align:center'>No direct messages.</div>";
+
+      // GROUPS
+      let groupsHtml = "";
+      groups.forEach(group => {
+        const isMember = group.members.includes(currentUser);
+        const isInvited = group.invited && group.invited.includes(currentUser);
+        if (
+          !query ||
+          group.name.toLowerCase().includes(query) ||
+          (group.preview && group.preview.toLowerCase().includes(query))
+        ) {
+          if (isMember) {
+            groupsHtml += `<div class="dm-row" onclick="showGroupChat('${group.name}')">
+              <img class="dm-avatar" src="${group.avatar}">
+              <div style="flex:1;">
+                <span class="dm-title">${group.name}
+                  <span class="badge group">Group</span>
+                  ${group.closed ? '<span class="badge closed" title="Invite Only">🔒</span>' : ''}
+                  <span class="badge joined">Joined</span>
+                </span>
+                <div style="color:#888;font-size:0.97rem;">${group.preview}</div>
+              </div>
+              ${group.unread ? `<span style="background:var(--accent);color:#fff;border-radius:8px;padding:0 7px;font-size:0.93rem;margin-left:8px;">${group.unread}</span>` : ""}
+            </div>`;
+          } else if (group.closed) {
+            groupsHtml += `<div class="dm-row">
+              <img class="dm-avatar" src="${group.avatar}">
+              <div style="flex:1;">
+                <span class="dm-title">${group.name}
+                  <span class="badge group">Group</span>
+                  <span class="badge closed" title="Invite Only">🔒</span>
+                  ${isInvited ? '<span class="badge invited">Invited</span>' : ''}
+                </span>
+                <div style="color:#888;font-size:0.97rem;">${group.preview}</div>
+              </div>
+              ${
+                isInvited
+                  ? `<button class="group-join-btn" style="color:#24e25a;" title="Accept Invite" onclick="acceptGroupInvite('${group.name}');event.stopPropagation();">✔️</button>`
+                  : `<button class="group-join-btn" style="color:#3d8af7;" title="Request Invite" onclick="requestGroupInvite('${group.name}');event.stopPropagation();">✉️</button>`
+              }
+            </div>`;
+          } else {
+            groupsHtml += `<div class="dm-row">
+              <img class="dm-avatar" src="${group.avatar}">
+              <div style="flex:1;">
+                <span class="dm-title">${group.name}<span class="badge group">Group</span></span>
+                <div style="color:#888;font-size:0.97rem;">${group.preview}</div>
+              </div>
+              <button class="group-join-btn" title="Join Group" onclick="joinGroup('${group.name}');event.stopPropagation();">➕</button>
+            </div>`;
+          }
+        }
+      });
+      document.getElementById("groupList").innerHTML = groupsHtml || "<div style='color:#aaa;text-align:center'>No groups found.</div>";
+    }
+    // DM and Group chat popups (demo)
+    function showDMChat(name) {
+      showModal(`<div style="font-size:2rem;">💬</div>
+        <div style="font-weight:600;font-size:1.1rem;margin-top:0.6rem;">Chat with <b>${name}</b></div>
+        <div style="color:#aaa;font-size:0.97rem;margin-top:1rem;">(Chat UI coming soon!)</div>`);
+    }
+    function showGroupChat(name) {
+      showModal(`<div style="font-size:2rem;">🫂</div>
+        <div style="font-weight:600;font-size:1.07rem;margin-top:0.6rem;">Group: <b>${name}</b></div>
+        <div style="color:#aaa;font-size:0.97rem;margin-top:1rem;">(Group chat UI coming soon!)</div>`);
+    }
+    // Group joining/invite logic + popups + notifications
+    function joinGroup(name) {
+      const group = groups.find(g=>g.name===name);
+      if(group && !group.members.includes(currentUser)) {
+        group.members.push(currentUser);
+        renderMsgLists();
+        notifications.unshift({type:"group_invite", text:`You joined the group ${name}!`, time:"Now", read:false});
+        updateNotifBell();
+        showModal(`<div style="font-size:2.1rem;margin-bottom:1rem;">🫂</div>
+          <div style="font-weight:600;font-size:1.2rem;">You joined <b>${name}</b>!</div>
+          <div style="color:#888;margin-top:0.5rem;">You can now chat and share with this group.</div>`);
+      }
+    }
+    function requestGroupInvite(name) {
+      const group = groups.find(g=>g.name===name);
+      if(group && !group.invited.includes(currentUser)) {
+        group.invited.push(currentUser);
+        renderMsgLists();
+        notifications.unshift({type:"group_invite", text:`You requested to join ${name}.`, time:"Now", read:false});
+        updateNotifBell();
+        showModal(`<div style="font-size:2.1rem;margin-bottom:1rem;">✉️</div>
+          <div style="font-weight:600;font-size:1.2rem;">Invite Request Sent!</div>
+          <div style="color:#888;margin-top:0.5rem;">You’ve asked to join <b>${group.name}</b>. Group admins will get a notification.</div>`);
+      }
+    }
+    function acceptGroupInvite(name) {
+      const group = groups.find(g=>g.name===name);
+      if(group && group.invited.includes(currentUser)) {
+        group.invited = group.invited.filter(u=>u!==currentUser);
+        group.members.push(currentUser);
+        renderMsgLists();
+        notifications.unshift({type:"group_accept", text:`Your request to join ${name} was accepted!`, time:"Now", read:false});
+        updateNotifBell();
+        showModal(`<div style="font-size:2.1rem;margin-bottom:1rem;">🫂</div>
+          <div style="font-weight:600;font-size:1.2rem;">You joined <b>${group.name}</b>!</div>
+          <div style="color:#888;margin-top:0.5rem;">You can now chat and share with this group.</div>`);
+      }
+    }
+    function showCreateGroup() {
+      document.getElementById("createGroupPanel").style.display = "";
+      document.getElementById("newGroupName").focus();
+    }
+    function hideCreateGroup() {
+      document.getElementById("createGroupPanel").style.display = "none";
+      document.getElementById("newGroupName").value = "";
+      document.getElementById("newGroupClosed").checked = false;
+    }
+    function createGroup() {
+      const name = document.getElementById("newGroupName").value.trim();
+      const closed = document.getElementById("newGroupClosed").checked;
+      if(name && !groups.find(g=>g.name.toLowerCase()===name.toLowerCase())) {
+        groups.unshift({name, avatar:"https://img.icons8.com/emoji/48/people-hugging.png", members:[currentUser], preview:"Welcome to "+name+"!", unread:0, closed, invited:[]});
+        hideCreateGroup();
+        renderMsgLists();
+        notifications.unshift({type:"group_invite", text:`You created group ${name}!`, time:"Now", read:false});
+        updateNotifBell();
+        showModal(`<div style="font-size:2rem;margin-bottom:1rem;">🎉</div>
+          <div style="font-weight:600;font-size:1.15rem;">Group <b>${name}</b> created!</div>
+          <div style="color:#888;margin-top:0.5rem;">You can now invite friends and start chatting.</div>`);
+      }
+    }
+
+    // --- FEED ---
+    const posts = [
+      {
+        user: "Lily",
+        avatar: "https://randomuser.me/api/portraits/women/65.jpg",
+        content: "Had so much fun at the art club today! 🎨💕",
+        image: "https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=600&q=80",
+        audience: "everyone"
+      },
+      {
+        user: "Bestie",
+        avatar: "https://randomuser.me/api/portraits/women/66.jpg",
+        content: "Our dance performance was a blast! Watch the vid below 👇",
+        video: "https://www.w3schools.com/html/mov_bbb.mp4",
+        audience: "everyone"
+      },
+      {
+        user: "Sam",
+        avatar: "https://randomuser.me/api/portraits/men/67.jpg",
+        content: "Congrats to everyone who participated in the Science Fair! 🏆",
+        image: "https://images.unsplash.com/photo-1503676382389-4809596d5290?auto=format&fit=crop&w=600&q=80",
+        audience: "friends"
+      }
+    ];
+    function renderFeed() {
+      let html = "";
+      const query = (document.getElementById("feedSearch")?.value || "").toLowerCase();
+      posts.forEach(post => {
+        if (
+          !query ||
+          post.user.toLowerCase().includes(query) ||
+          (post.content && post.content.toLowerCase().includes(query))
+        ) {
+          html += `<div class="post">
+            <div class="post-header">
+              <img class="post-avatar" src="${post.avatar}" alt="${post.user}'s Profile">
+              <span class="post-user">${post.user}</span>
+            </div>
+            <div class="post-content">${post.content}</div>
+            ${post.image ? `<img src="${post.image}" alt="Image" style="max-width:100%;border-radius:13px;margin-top:0.7rem;">` : ""}
+            ${post.video ? `<video controls poster="" style="margin-top:0.5rem;max-width:100%;border-radius:14px;">
+              <source src="${post.video}" type="video/mp4">Your browser does not support the video tag.
+            </video>` : ""}
+            <div class="post-actions">
+              <span>❤️ 128</span>
+              <span>💬 8</span>
+              <span>🔗 Share</span>
+            </div>
+          </div>`;
+        }
+      });
+      document.getElementById("feedList").innerHTML = html || "<div style='color:#aaa;text-align:center'>No posts found.</div>";
+    }
+
+    // --- POST CREATOR LOGIC ---
+    function showPostCreator() {
+      document.getElementById('postCreatorOverlay').style.display = 'flex';
+      document.getElementById('postText').value = "";
+      document.getElementById('postImageInput').value = "";
+      document.getElementById('postImgPreviewArea').innerHTML = "";
+      document.getElementById('postAudience').value = "everyone";
+      document.getElementById('postBtn').disabled = true;
+    }
+    function hidePostCreator() {
+      document.getElementById('postCreatorOverlay').style.display = 'none';
+    }
+    // Enable/disable post button
+    document.getElementById('postText').addEventListener('input', function() {
+      document.getElementById('postBtn').disabled = !this.value.trim();
+    });
+    // Preview image when selected
+    function postImagePreview(e) {
+      const file = e.target.files[0];
+      const preview = document.getElementById('postImgPreviewArea');
+      if(file) {
+        const reader = new FileReader();
+        reader.onload = function(evt) {
+          preview.innerHTML = `<img src="${evt.target.result}" class="preview-img" alt="Preview">`;
+        };
+        reader.readAsDataURL(file);
+      } else {
+        preview.innerHTML = "";
+      }
+    }
+    // Submit post
+    function submitPost() {
+      const text = document.getElementById('postText').value.trim();
+      const audience = document.getElementById('postAudience').value;
+      const imgInput = document.getElementById('postImageInput');
+      let imageUrl = "";
+      let videoUrl = "";
+      if(imgInput.files && imgInput.files[0]) {
+        // For demo, use a data URL (in production, upload to server or storage)
+        const file = imgInput.files[0];
+        if(file.type.startsWith("image/")) {
+          imageUrl = document.querySelector("#postImgPreviewArea img")?.src || "";
+        }
+        // (video support can be added similarly)
+      }
+      // Demo: Always post as currentUser (use avatar from profile)
+      const avatar = "https://randomuser.me/api/portraits/men/60.jpg";
+      posts.unshift({
+        user: "samkelizwe",
+        avatar,
+        content: text,
+        image: imageUrl,
+        video: videoUrl,
+        audience
+      });
+      hidePostCreator();
+      renderFeed();
+      showModal(`<div style="font-size:2rem;margin-bottom:1rem;">🌸</div>
+        <div style="font-weight:600;font-size:1.1rem;">Your post is live!</div>
+        <div style="color:#888;margin-top:0.5rem;">You just shared a moment on LilyGram.</div>`);
+    }
+
+    // --- Initial render ---
+    renderFeed();
+    renderUserList();
+    // Messages default tab
+    showMsgTab('dm');
+  </script>
+</body>
+</html>
