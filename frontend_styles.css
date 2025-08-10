@@ -1,0 +1,60 @@
+body {
+  font-family: sans-serif;
+  background: #f9f6ff;
+  margin: 0;
+  padding: 0;
+}
+
+header {
+  background: #a974ff;
+  color: white;
+  padding: 1em;
+  text-align: center;
+}
+
+h1 {
+  margin: 0;
+  font-weight: 700;
+}
+
+#auth button {
+  margin: 0 0.5em;
+  background: #fff;
+  color: #a974ff;
+  border: 1px solid #a974ff;
+  border-radius: 3px;
+  padding: 0.5em 1em;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+main {
+  max-width: 600px;
+  margin: 2em auto;
+  background: white;
+  border-radius: 8px;
+  padding: 2em;
+  box-shadow: 0 2px 8px rgba(169,116,255,0.15);
+}
+
+#create-post textarea {
+  width: 100%;
+  height: 70px;
+  margin-bottom: 1em;
+  resize: vertical;
+}
+
+#create-post select, #create-post button {
+  margin-right: 1em;
+}
+
+#posts > div {
+  background: #f2ebff;
+  margin-bottom: 1em;
+  padding: 1em;
+  border-radius: 4px;
+}
+
+strong {
+  color: #a974ff;
+}
