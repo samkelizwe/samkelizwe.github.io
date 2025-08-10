@@ -1,0 +1,39 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>LilyGram</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>
+    <h1>LilyGram 🌸</h1>
+    <div id="auth">
+      <button id="show-login">Login</button>
+      <button id="show-register">Register</button>
+      <button id="logout" style="display:none">Logout</button>
+    </div>
+  </header>
+
+  <main>
+    <section id="create-post" style="display:none">
+      <h2>Create Post</h2>
+      <textarea id="post-content"></textarea>
+      <select id="post-visibility">
+        <option>Everyone</option>
+        <option>Friends Only</option>
+        <option>My Profile</option>
+      </select>
+      <button id="post-btn">Post</button>
+    </section>
+
+    <section id="feed">
+      <h2>Feed</h2>
+      <div id="posts"></div>
+    </section>
+  </main>
+
+  <script src="main.js"></script>
+</body>
+</html>
